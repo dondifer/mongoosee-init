@@ -5,15 +5,6 @@ const { jwt_secret } = require("../config/key.js");
 const UserController = {
   async register(req, res) {
     try {
-      const user = await User.create(req.body);
-
-      res.status(201).send({ message: "Usuario registrado con exito", user });
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  async login(req, res) {
-    try {
       if (
         !req.body.name ||
         !req.body.email ||
@@ -24,6 +15,15 @@ const UserController = {
         res.send({ message: "Te faltan campos por rellenar" });
       }
 
+      const user = await User.create(req.body);
+
+      res.status(201).send({ message: "Usuario registrado con exito", user });
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  async login(req, res) {
+    try {
       const user = await User.findOne({
         email: req.body.email,
       });
