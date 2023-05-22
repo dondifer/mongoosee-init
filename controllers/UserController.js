@@ -54,6 +54,19 @@ const UserController = {
       });
     }
   },
+  async getInfo(req, res) {
+    try {
+      const user = await User.findById(req.user._id);
+
+      res.send({ message: "Ete he Sech", user });
+    } catch (error) {
+      console.error(error);
+
+      res.status(500).send({
+        message: "Hubo un problema al intentar obtener el usuario",
+      });
+    }
+  },
 };
 
 module.exports = UserController;
