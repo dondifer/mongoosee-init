@@ -10,7 +10,14 @@ const PostController = {
 
       res.status(201).send(post);
     } catch (error) {
-      console.error(error);
+      if (error.name === "ValidationError") {
+        console.error("Validation Error:", error.message);
+        console.error("Validation Errors:", error.errors);
+        res.status(400).send(error.message);
+      } else {
+        console.error("Error creating user:", error);
+        res.status(500).send(error.message);
+      }
     }
   },
   async update(req, res) {
@@ -57,15 +64,21 @@ const PostController = {
             comments: { comment: req.body.comment, userId: req.user._id },
           },
         },
-
         { new: true }
       );
 
       res.send(post);
     } catch (error) {
-      console.error(error);
-
-      res.status(500).send({ message: "There was a problem with your review" });
+      if (error.name === "ValidationError") {
+        console.error("Validation Error:", error.message);
+        console.error("Validation Errors:", error.errors);
+        res.status(400).send(error.message);
+      } else {
+        console.error("Error creating user:", error);
+        res
+          .status(500)
+          .send({ message: "There was a problem with your review" });
+      }
     }
   },
   async findById(req, res) {
