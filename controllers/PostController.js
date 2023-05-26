@@ -36,6 +36,14 @@ const PostController = {
       console.error(error);
     }
   },
+  async getAll(req, res) {
+    try {
+      const post = await Post.find().populate("userId");
+      res.send({ message: "Aki tan todos los post", post });
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };
 
 module.exports = PostController;

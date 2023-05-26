@@ -1,5 +1,7 @@
 const User = require("../models/User");
 
+const Post = require("../models/Post");
+
 const jwt = require("jsonwebtoken");
 
 const { jwt_secret } = require("../config/key.js");
@@ -40,25 +42,25 @@ const isAdmin = async (req, res, next) => {
   next();
 };
 
-// const isAuthor = async (req, res, next) => {
-//   try {
-//     const order = await Order.findById(req.params._id);
+const isAuthor = async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params._id);
 
-//     if (order.userId.toString() !== req.user._id.toString()) {
-//       return res
-//         .status(403)
-//         .send({ message: "Quieto paro! Este post no es el tuyo" });
-//     }
+    if (post.userId.toString() !== req.user._id.toString()) {
+      return res
+        .status(403)
+        .send({ message: "Quieto paro! Este post no es el tuyo" });
+    }
 
-//     next();
-//   } catch (error) {
-//     console.error(error);
+    next();
+  } catch (error) {
+    console.error(error);
 
-//     return res.status(500).send({
-//       error,
-//       message: "Ha habido un problema al editar o borrar el post",
-//     });
-//   }
-// };
+    return res.status(500).send({
+      error,
+      message: "Ha habido un problema al editar o borrar el post",
+    });
+  }
+};
 
-module.exports = { authentication, isAdmin };
+module.exports = { authentication, isAdmin, isAuthor };
