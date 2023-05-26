@@ -64,6 +64,23 @@ const PostController = {
       res.status(500).send({ message: "There was a problem with your review" });
     }
   },
+  async findById(req, res) {
+    try {
+      const post = await Post.findById(req.params._id);
+      res.send({ message: "Aki ta su post", post });
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  async getPostsByName(req, res) {
+    try {
+      const title = new RegExp(req.params.title, "i");
+      const post = await Post.find({ title });
+      res.send(post);
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 module.exports = PostController;
