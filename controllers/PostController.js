@@ -98,6 +98,58 @@ const PostController = {
       console.log(error);
     }
   },
+  async insertLike(req, res) {
+    try {
+      const post = await Post.findByIdAndUpdate(
+        req.params._id,
+        {
+          $push: {
+            likes: { userId: req.user._id },
+          },
+        },
+        { new: true }
+      );
+
+      res.send(post);
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        console.error("Validation Error:", error.message);
+        console.error("Validation Errors:", error.errors);
+        res.status(400).send(error.message);
+      } else {
+        console.error("Error creating user:", error);
+        res
+          .status(500)
+          .send({ message: "There was a problem with your review" });
+      }
+    }
+  },
+  async removeLike(req, res) {
+    try {
+      const post = await Post.findByIdAndUpdate(
+        req.params._id,
+        {
+          $pull: {
+            likes: { userId: req.user._id },
+          },
+        },
+        { new: true }
+      );
+
+      res.send(post);
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        console.error("Validation Error:", error.message);
+        console.error("Validation Errors:", error.errors);
+        res.status(400).send(error.message);
+      } else {
+        console.error("Error creating user:", error);
+        res
+          .status(500)
+          .send({ message: "There was a problem with your review" });
+      }
+    }
+  },
 };
 
 module.exports = PostController;

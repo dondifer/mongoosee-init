@@ -12,5 +12,7 @@ router.get("/getAll", PostController.getAll);
 router.put("/comment/:_id", authentication, PostController.insertComment);
 router.get("/findById/:_id", PostController.findById);
 router.get("/findByTitle/:title", PostController.getPostsByName);
+router.put("/like/:_id", authentication, PostController.insertLike);
+router.put("/unlike/:_id", authentication, PostController.removeLike);
 
 module.exports = router;
