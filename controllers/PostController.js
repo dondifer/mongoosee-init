@@ -82,6 +82,27 @@ const PostController = {
       }
     }
   },
+  async updateComment(req, res) {
+    try {
+      const post = await Post.updateOne(
+        { "comments._id": req.params._id },
+        { $set: { "comments.$.comment": req.body.comment } }
+      );
+
+      res.send(post);
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        console.error("Validation Error:", error.message);
+        console.error("Validation Errors:", error.errors);
+        res.status(400).send(error.message);
+      } else {
+        console.error("Error creating user:", error);
+        res
+          .status(500)
+          .send({ message: "There was a problem with your review" });
+      }
+    }
+  },
   async findById(req, res) {
     try {
       const post = await Post.findById(req.params._id);
