@@ -55,6 +55,7 @@ const PostController = {
       console.error(error);
     }
   },
+  //TODO la validación del comentario no esta funcionando ver mañana sabado
   async insertComment(req, res) {
     try {
       const post = await Post.findByIdAndUpdate(
@@ -100,17 +101,23 @@ const PostController = {
   },
   async insertLike(req, res) {
     try {
-      const post = await Post.findByIdAndUpdate(
-        req.params._id,
-        {
-          $push: {
-            likes: { userId: req.user._id },
+      const isLiked = await Post.findById(req.params._id).findOne({
+        "likes.userId": req.user._id,
+      });
+      if (!isLiked) {
+        const post = await Post.findByIdAndUpdate(
+          req.params._id,
+          {
+            $push: {
+              likes: { userId: req.user._id },
+            },
           },
-        },
-        { new: true }
-      );
-
-      res.send(post);
+          { new: true }
+        );
+        res.send(post);
+      } else {
+        res.send("You already liked this post");
+      }
     } catch (error) {
       if (error.name === "ValidationError") {
         console.error("Validation Error:", error.message);
