@@ -49,7 +49,7 @@ const isAuthor = async (req, res, next) => {
     if (post.userId.toString() !== req.user._id.toString()) {
       return res
         .status(403)
-        .send({ message: "Quieto paro! Este post no es el tuyo" });
+        .send({ message: "Quieto parao! Este post no es el tuyo" });
     }
 
     next();
