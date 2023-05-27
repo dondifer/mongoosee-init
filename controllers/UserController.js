@@ -3,23 +3,13 @@ const jwt = require("jsonwebtoken");
 const { jwt_secret } = require("../config/key.js");
 
 const UserController = {
-  async register(req, res) {
+  async register(req, res, next) {
     try {
-      if (
-        !req.body.name ||
-        !req.body.email ||
-        !req.body.password ||
-        !req.body.role ||
-        !req.body.age
-      ) {
-        res.send({ message: "Te faltan campos por rellenar" });
-      }
-
       const user = await User.create(req.body);
-
       res.status(201).send({ message: "Usuario registrado con exito", user });
     } catch (error) {
-      console.error(error);
+      error.origin = "usuario";
+      next(error);
     }
   },
   async login(req, res) {

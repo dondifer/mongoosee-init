@@ -1,7 +1,7 @@
 const Post = require("../models/Post.js");
 
 const PostController = {
-  async create(req, res) {
+  async create(req, res, next) {
     try {
       const post = await Post.create({
         ...req.body,
@@ -10,14 +10,8 @@ const PostController = {
 
       res.status(201).send(post);
     } catch (error) {
-      if (error.name === "ValidationError") {
-        console.error("Validation Error:", error.message);
-        console.error("Validation Errors:", error.errors);
-        res.status(400).send(error.message);
-      } else {
-        console.error("Error creating user:", error);
-        res.status(500).send(error.message);
-      }
+      error.origin = "post";
+      next(error);
     }
   },
   async update(req, res) {
@@ -82,7 +76,7 @@ const PostController = {
       }
     }
   },
-  async updateComment(req, res) {
+  async updateComment(req, res, next) {
     try {
       const post = await Post.updateOne(
         { "comments._id": req.params._id },
@@ -91,16 +85,8 @@ const PostController = {
 
       res.send(post);
     } catch (error) {
-      if (error.name === "ValidationError") {
-        console.error("Validation Error:", error.message);
-        console.error("Validation Errors:", error.errors);
-        res.status(400).send(error.message);
-      } else {
-        console.error("Error creating user:", error);
-        res
-          .status(500)
-          .send({ message: "There was a problem with your review" });
-      }
+      error.origin = "comment";
+      next(error);
     }
   },
   async findById(req, res) {

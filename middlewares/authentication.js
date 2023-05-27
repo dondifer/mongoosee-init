@@ -1,6 +1,5 @@
 const User = require("../models/User");
 const Post = require("../models/Post");
-const mongoose = require("mongoose");
 
 const jwt = require("jsonwebtoken");
 
@@ -66,7 +65,7 @@ const isAuthor = async (req, res, next) => {
 const isAuthorComment = async (req, res, next) => {
   try {
     const comment = await Post.findOne({
-      "comments._id": new mongoose.Types.ObjectId(req.params._id),
+      "comments._id": req.params._id,
     });
 
     if (comment.userId.toString() !== req.user._id.toString()) {
