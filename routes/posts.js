@@ -20,6 +20,12 @@ router.put(
   isAuthorComment,
   PostController.updateComment
 );
+router.delete(
+  "/deleteComment/:_id",
+  authentication,
+  isAuthorComment,
+  PostController.deleteComment
+);
 router.get("/findById/:_id", PostController.findById);
 router.get("/findByTitle/:title", PostController.getPostsByName);
 router.put("/like/:_id", authentication, PostController.insertLike);

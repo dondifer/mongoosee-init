@@ -89,6 +89,18 @@ const PostController = {
       next(error);
     }
   },
+  async deleteComment(req, res, next) {
+    try {
+      const post = await Post.findOneAndDelete({
+        "comments._id": req.params._id,
+      });
+
+      res.send(post);
+    } catch (error) {
+      error.origin = "comment";
+      next(error);
+    }
+  },
   async findById(req, res) {
     try {
       const post = await Post.findById(req.params._id);
