@@ -3,7 +3,11 @@ const express = require("express");
 const router = express.Router();
 
 const PostController = require("../controllers/PostController");
-const { authentication, isAuthor } = require("../middlewares/authentication");
+const {
+  authentication,
+  isAuthor,
+  isAuthorComment,
+} = require("../middlewares/authentication");
 
 router.post("/", authentication, PostController.create);
 router.put("/update/:_id", authentication, isAuthor, PostController.update);
@@ -13,7 +17,7 @@ router.put("/comment/:_id", authentication, PostController.insertComment);
 router.put(
   "/updateComment/:_id",
   authentication,
-  isAuthor,
+  isAuthorComment,
   PostController.updateComment
 );
 router.get("/findById/:_id", PostController.findById);
