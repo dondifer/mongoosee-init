@@ -54,9 +54,9 @@ The api will be public in [Railway](https://railway.app/dashboard) for 400h the 
 ```bash
 mongoosee-init-production.up.railway.app
 ```
-[https://mongoosee-init-production.up.railway.app/](https://mongoosee-init-production.up.railway.app/)
 For example if you want to wet post you will call:
-```bash https://mongoosee-init-production.up.railway.app/posts/getAll/?page=1&limit=10
+```bash 
+https://mongoosee-init-production.up.railway.app/posts/getAll/?page=1&limit=10
 ```
     
 ## Authors
