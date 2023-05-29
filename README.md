@@ -49,6 +49,15 @@ When local server is compiled it shoud appear next log in console:
 Server started at port 3000
 Base de datos conectada con éxito
 ```
+
+The api will be public in [Railway](https://railway.app/dashboard) for 400h the api base url will be:
+```bash
+mongoosee-init-production.up.railway.app
+```
+For example if you want to wet post you will call:
+```bash 
+https://mongoosee-init-production.up.railway.app/posts/getAll/?page=1&limit=10
+```
     
 ## Authors
 
