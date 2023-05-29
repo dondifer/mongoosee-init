@@ -49,7 +49,7 @@ const PostController = {
       console.error(error);
     }
   },
-  //TODO la validación del comentario no esta funcionando ver mañana sabado
+  //TODO la validación del comentario tiene que ser con javascript ya que el push no lo valida
   async insertComment(req, res) {
     try {
       const post = await Post.findByIdAndUpdate(
