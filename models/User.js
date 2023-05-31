@@ -20,6 +20,9 @@ const UserSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Por favor rellena tu edad"],
     },
+    image: {
+      type: String,
+    },
     role: String,
     tokens: [],
   },

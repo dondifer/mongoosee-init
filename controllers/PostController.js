@@ -83,7 +83,11 @@ const PostController = {
     try {
       const post = await Post.updateOne(
         { "comments._id": req.params._id },
-        { $set: { "comments.$.comment": req.body.comment } }
+        {
+          $set: {
+            "comments.$.comment": { ...req.body.comment, image: req.image },
+          },
+        }
       );
 
       res.send(post);

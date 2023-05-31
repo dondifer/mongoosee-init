@@ -22,6 +22,9 @@ const PostSchema = new mongoose.Schema(
           type: String,
           required: [true, "Your comment is empty?"],
         },
+        image: {
+          type: String,
+        },
       },
     ],
     userId: {
