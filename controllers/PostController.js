@@ -6,7 +6,10 @@ const PostController = {
       const post = await Post.create({
         ...req.body,
         userId: req.user._id,
+        image: req.image,
       });
+
+      console.log(req.image);
 
       res.status(201).send(post);
     } catch (error) {

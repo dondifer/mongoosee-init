@@ -1,5 +1,5 @@
 const express = require("express");
-
+const upload = require("multer")();
 const router = express.Router();
 
 const PostController = require("../controllers/PostController");
@@ -9,7 +9,9 @@ const {
   isAuthorComment,
 } = require("../middlewares/authentication");
 
-router.post("/", authentication, PostController.create);
+const { setImage } = require("../middlewares/imageUpload");
+
+router.post("/", upload.any(), setImage, authentication, PostController.create);
 router.put("/update/:_id", authentication, isAuthor, PostController.update);
 router.delete("/delete/:_id", authentication, isAuthor, PostController.delete);
 router.get("/getAll", PostController.getAll);
