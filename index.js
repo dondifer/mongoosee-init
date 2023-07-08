@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 
 require("dotenv").config();
@@ -13,6 +14,7 @@ const swaggerUI = require("swagger-ui-express");
 const docs = require("./doc/index");
 
 app.use(express.json());
+app.use(cors());
 dbConnection();
 app.use("/users", require("./routes/users"));
 app.use("/posts", require("./routes/posts"));
