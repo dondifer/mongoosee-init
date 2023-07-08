@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Post = require("../models/Post.js");
 const jwt = require("jsonwebtoken");
 const { jwt_secret } = require("../config/key.js");
 
@@ -47,8 +48,10 @@ const UserController = {
   async getInfo(req, res) {
     try {
       const user = await User.findById(req.user._id);
+      const userPosts = await Post.find({ userId: req.user._id });
+      const userPost = { userInfo: user, posts: userPosts };
 
-      res.send({ message: "Ete he Sech", user });
+      res.send({ message: "Ete he Sech", userPost });
     } catch (error) {
       console.error(error);
 
