@@ -43,10 +43,9 @@ const PostController = {
   async getAll(req, res) {
     try {
       const { page = 1, limit = 10 } = req.query;
-      const post = await Post.find()
-        .populate("userId")
-        .limit(limit)
-        .skip((page - 1) * limit);
+      const post = await Post.find().populate("userId");
+      // .limit(limit)
+      // .skip((page - 1) * limit);
       res.send({ message: "Aki tan todos los post", post });
     } catch (error) {
       console.error(error);
